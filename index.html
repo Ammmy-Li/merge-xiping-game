@@ -447,24 +447,32 @@
 
     function drawItemVisual(item, x, y, r) {
       if (item.image && item.image.complete && item.image.naturalWidth) {
+        const circleR = r - 2;
+
         ctx.save();
 
+        // 先建立一个真正的圆形区域。后面所有图片内容都只能出现在这个圆里。
         ctx.beginPath();
-        ctx.arc(x, y, r - 2, 0, Math.PI * 2);
+        ctx.arc(x, y, circleR, 0, Math.PI * 2);
+        ctx.closePath();
         ctx.clip();
 
+        // 圆形底色。即使原图有白底，外面也不会出现方形。
         ctx.fillStyle = "#fffaf0";
-        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        ctx.fillRect(x - circleR, y - circleR, circleR * 2, circleR * 2);
 
-        drawImageCover(item.image, x, y, (r - 2) * 2);
+        // 用 contain，不强行把图裁太狠。因为已经有圆形 clip，所以最后一定是圆的。
+        drawImageContain(item.image, x, y, circleR * 2.15);
 
         ctx.restore();
 
+        // 最后单独画一个明显的圆形边框，保证视觉上是圆球。
         ctx.save();
         ctx.beginPath();
-        ctx.arc(x, y, r - 2, 0, Math.PI * 2);
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = "rgba(174, 126, 55, 0.65)";
+        ctx.arc(x, y, circleR, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "rgba(174, 126, 55, 0.75)";
         ctx.stroke();
         ctx.restore();
       } else {
