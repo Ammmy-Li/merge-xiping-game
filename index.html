@@ -284,7 +284,7 @@
         unlockTitle: "国色天香奚士庸",
         emoji: "🪭",
         img: "xishiyong.PNG",
-        r: 24,
+        r: 96,
         score: 2,
         desc: "奚平一时忘了将打开的折扇收回去，扇面上“国色天香”四个大字横陈胸前，他呆成了一只国色天香的木鸡。"
       },
@@ -422,12 +422,7 @@
 
     function drawItemVisual(item, x, y, r) {
       if (item.image && item.image.complete && item.image.naturalWidth) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(x, y, r - 3, 0, Math.PI * 2);
-        ctx.clip();
-        drawImageContain(item.image, x, y, (r - 4) * 2);
-        ctx.restore();
+        drawImageContain(item.image, x, y, r * 2.45);
       } else {
         ctx.font = `${Math.max(20, r * 1.15)}px serif`;
         ctx.textAlign = "center";
@@ -602,16 +597,16 @@
     function drawBall(b) {
       const item = items[b.level];
       const gradient = ctx.createRadialGradient(b.x - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.2, b.x, b.y, b.r);
-      gradient.addColorStop(0, "#ffffff");
-      gradient.addColorStop(1, "#ffe4e6");
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.7)");
+      gradient.addColorStop(1, "rgba(255, 228, 230, 0.28)");
 
       ctx.save();
       ctx.beginPath();
       ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
       ctx.fillStyle = gradient;
       ctx.fill();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(244, 114, 182, 0.55)";
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(215, 183, 125, 0.35)";
       ctx.stroke();
 
       drawItemVisual(item, b.x, b.y, b.r);
@@ -644,10 +639,10 @@
       ctx.globalAlpha = canDrop && !gameOver ? 0.9 : 0.35;
       ctx.beginPath();
       ctx.arc(previewX, previewY, previewR, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
       ctx.fill();
-      ctx.strokeStyle = "rgba(251, 113, 133, 0.7)";
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(215, 183, 125, 0.35)";
+      ctx.lineWidth = 1;
       ctx.stroke();
       drawItemVisual(item, previewX, previewY, previewR);
       ctx.restore();
